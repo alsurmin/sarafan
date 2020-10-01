@@ -60,20 +60,20 @@ Vue.component('message-row', {
         '<div> ' +
         '<i>{{ message.id }}</i> {{ message.text }} ' +
         '<span style="position: absolute; right: 0">' +
-        '<input type="button" value="Edit" @click="edit"/>' +
-        '<input type="button" value="X" @click="del"/>' +
+        '<input type="button" value="Edit" @click="edit" />' +
+        '<input type="button" value="X" @click="del" />' +
         '</span>' +
         '</div>',
     methods: {
         edit: function () {
             this.editMethod(this.message);
         },
-        del: function () {
+        del: function() {
             messageApi.remove({id: this.message.id}).then(result => {
-                if(result.ok) {
+                if (result.ok) {
                     this.messages.splice(this.messages.indexOf(this.message), 1)
                 }
-            });
+            })
         }
     }
 });
