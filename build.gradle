@@ -27,6 +27,8 @@ dependencies {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation('org.springframework.boot:spring-boot-starter-security')
+	implementation('org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.0.0.RELEASE')
 	implementation 'org.postgresql:postgresql'
 	implementation 'javax.xml.bind:jaxb-api'
 	implementation group: 'com.sun.xml.bind', name: 'jaxb-core', version: '2.3.0.1'
