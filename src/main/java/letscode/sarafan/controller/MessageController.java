@@ -1,6 +1,5 @@
 package letscode.sarafan.controller;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
 import letscode.sarafan.domain.Message;
 import letscode.sarafan.domain.Views;
