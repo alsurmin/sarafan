@@ -5,13 +5,20 @@ module.exports = {
     mode: 'development',
     devtool: 'source-map',
     entry: path.join(__dirname, 'src', 'main', 'resources', 'static', 'js', 'main.js'),
+    stats: {
+        logging: 'error',
+        modules: false
+    },
     devServer: {
         static: './dist',
         compress: true,
         port: 8000,
         allowedHosts: [
             'localhost:9000'
-        ]
+        ],
+        client: {
+            logging: 'error',
+        },
     },
     module: {
         rules: [
