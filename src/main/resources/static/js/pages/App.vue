@@ -1,23 +1,35 @@
 <template>
-  <div>
-    <div v-if="!profile">Необходимо авторизоваться через
-      <a href="/login">Google</a>
-    </div>
-    <div v-else>
-      <div>{{profile.name}}&nbsp;<a href="/logout">Выйти</a></div>
-      <messages-list :messages="messages" />
-    </div>
-  </div>
+  <v-app>
+    <v-toolbar app>
+      <v-toolbar-title>Sarafan</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <span v-if="profile">{{profile.name}}</span>
+      <v-btn v-if="profile" icon href="/logout">
+        <logout-icon />
+      </v-btn>
+    </v-toolbar>
+    <v-content>
+      <v-container v-if="!profile">
+        Необходимо авторизоваться через
+        <a href="/login">Google</a>
+      </v-container>
+      <v-container v-if="profile">
+        <messages-list :messages="messages" />
+      </v-container>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
 import MessagesList from 'components/messages/MessageList.vue'
 import { addHandler } from 'util/ws'
 import { getIndex } from 'util/collections'
+import LogoutIcon from 'vue-material-design-icons/Logout.vue';
 
 export default {
   components: {
-    MessagesList
+    MessagesList,
+    LogoutIcon,
   },
   data() {
     return {
@@ -31,7 +43,7 @@ export default {
       if (index > -1) {
         this.messages.splice(index, 1, data)
       } else {
-        this.messages.push(data);
+        this.messages.push(data)
       }
     })
   }
