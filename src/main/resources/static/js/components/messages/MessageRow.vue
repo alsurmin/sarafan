@@ -14,18 +14,20 @@
 
 <script>
 import DeleteIcon from 'vue-material-design-icons/Delete.vue';
+import { mapActions } from 'vuex'
 
 export default {
   components: {
     DeleteIcon,
   },
-  props: ['message', 'editMessage', 'deleteMessage', 'messages'],
+  props: ['message', 'editMessage'],
   methods: {
+    ...mapActions(['removeMessageAction']),
     edit() {
       this.editMessage(this.message)
     },
     del() {
-      this.deleteMessage(this.message)
+      this.removeMessageAction(this.message)
     }
   }
 }
