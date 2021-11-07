@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Collections;
 import java.util.HashMap;
 
 import static java.util.Objects.nonNull;
@@ -45,6 +46,8 @@ public class MainController {
             data.put("profile", user);
             String messages = writer.writeValueAsString(messageRepo.findAll());
             model.addAttribute("messages", messages);
+        } else {
+            model.addAttribute("messages", "[]");
         }
 
         model.addAttribute("frontendData", data);

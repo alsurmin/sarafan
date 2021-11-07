@@ -36,7 +36,12 @@ export default {
   },
   computed: mapState(['profile']),
   methods: {
-    ...mapMutations(['addMessageMutation', 'updateMessageMutation', 'removeMessageMutation']),
+    ...mapMutations([
+        'addMessageMutation',
+        'updateMessageMutation',
+        'removeMessageMutation',
+        'addCommentMutation'
+    ]),
     showMessages() {
       this.$router.push('/')
     },
@@ -58,10 +63,18 @@ export default {
             this.removeMessageMutation(data.body)
             break
           default:
-            console.error(`Looks like the event type if unknown "${data.eventsType}"`)
+            console.error(`Looks like the event type is unknown "${data.eventsType}"`)
+        }
+      } else if (data.objectType === 'COMMENT') {
+        switch (data.eventsType) {
+          case 'CREATE':
+            this.addCommentMutation(data.body)
+            break
+          default:
+            console.error(`Looks like the event type is unknown "${data.eventsType}"`)
         }
       } else {
-        console.error(`Looks like the object type if unknown "${data.objectType}"`)
+        console.error(`Looks like the object type is unknown "${data.objectType}"`)
       }
     })
   },
