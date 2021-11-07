@@ -10,6 +10,10 @@
         <delete-icon />
       </v-btn>
     </v-card-actions>
+    <comment-list
+        :comments="message.comments"
+        :message-id="message.id"
+    ></comment-list>
   </v-card>
 </template>
 
@@ -17,9 +21,11 @@
 import DeleteIcon from 'vue-material-design-icons/Delete.vue';
 import { mapActions } from 'vuex'
 import Media from '../media/Media.vue';
+import CommentList from '../comment/CommentList.vue';
 
 export default {
   components: {
+    CommentList,
     DeleteIcon,
     Media,
   },
