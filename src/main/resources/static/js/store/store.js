@@ -8,6 +8,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         messages,
+        profile,
         ...frontendData
     },
     getters: {
@@ -106,9 +107,6 @@ export default new Vuex.Store({
         async loadPageAction({commit, state}) {
             const response = await messagesApi.page(state.currentPage + 1)
             const data = await response.json()
-
-            console.log('data.totalPages', data.totalPages)
-            console.log('data.currentPage', data.currentPage)
 
             commit('addMessagePageMutation', data.messages)
             commit('updateTotalPagesMutation', data.totalPages)
