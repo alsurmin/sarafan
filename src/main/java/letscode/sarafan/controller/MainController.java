@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashMap;
-import java.util.Optional;
 
 import static java.util.Objects.nonNull;
 import static letscode.sarafan.controller.MessageController.MESSAGES_PER_PAGE;
@@ -62,7 +61,7 @@ public class MainController {
 
             Sort sort = Sort.by(Sort.Direction.DESC, "id");
             PageRequest pageRequest = PageRequest.of(0, MESSAGES_PER_PAGE, sort);
-            MessagePageDto messagePageDto = messageService.findAll(pageRequest);
+            MessagePageDto messagePageDto = messageService.findByAuthor(pageRequest, user);
 
             String messages = messageWriter.writeValueAsString(messagePageDto.getMessages());
 
