@@ -114,6 +114,7 @@ public class MessageService {
     public MessagePageDto findByAuthor(Pageable pageable, User user) {
         List<User> channels = userSubscriptionRepo.findBySubscriber(user)
                 .stream()
+                .filter(UserSubscription::isActive)
                 .map(UserSubscription::getChannel)
                 .collect(Collectors.toList());
 
