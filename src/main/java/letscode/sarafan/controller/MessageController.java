@@ -1,6 +1,7 @@
 package letscode.sarafan.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import io.sentry.Sentry;
 import letscode.sarafan.domain.Message;
 import letscode.sarafan.domain.User;
 import letscode.sarafan.domain.Views;
@@ -39,14 +40,21 @@ public class MessageController {
     }
 
     @PostMapping
+    @JsonView(Views.FullMessage.class)
     public Message create(
             @RequestBody Message message,
             @AuthenticationPrincipal User user
-    ) throws IOException {
-        return messageService.create(message, user);
+    ) {
+        try {
+            return messageService.create(message, user);
+        } catch (IOException e) {
+            Sentry.captureException(e);
+        }
+        return null;
     }
 
     @PutMapping("{id}")
+    @JsonView(Views.FullMessage.class)
     public Message update(
             @PathVariable("id") Message messageFormDb,
             @RequestBody Message message

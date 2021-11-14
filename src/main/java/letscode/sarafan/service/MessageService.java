@@ -15,7 +15,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -32,11 +31,11 @@ import static java.util.Objects.isNull;
 
 @Service
 public class MessageService {
-    private static String URL_PATTERN = "https?:\\/\\/?[\\w\\d\\._\\-%\\/\\?=&#]+";
-    private static String IMAGE_PATTERN = "\\.(jpeg|jpg|gif|png)$";
+    private static final String URL_PATTERN = "https?:\\/\\/?[\\w\\d\\._\\-%\\/\\?=&#]+";
+    private static final String IMAGE_PATTERN = "\\.(jpeg|jpg|gif|png)$";
 
-    private static Pattern URL_REGEX = Pattern.compile(URL_PATTERN, Pattern.CASE_INSENSITIVE);
-    private static Pattern IMG_REGEX = Pattern.compile(IMAGE_PATTERN, Pattern.CASE_INSENSITIVE);
+    private static final Pattern URL_REGEX = Pattern.compile(URL_PATTERN, Pattern.CASE_INSENSITIVE);
+    private static final Pattern IMG_REGEX = Pattern.compile(IMAGE_PATTERN, Pattern.CASE_INSENSITIVE);
 
     private final MessageRepo messageRepo;
     private final UserSubscriptionRepo userSubscriptionRepo;
@@ -45,7 +44,7 @@ public class MessageService {
     public MessageService(MessageRepo messageRepo, UserSubscriptionRepo userSubscriptionRepo, WsSender wsSender) {
         this.messageRepo = messageRepo;
         this.userSubscriptionRepo = userSubscriptionRepo;
-        this.wsSender = wsSender.getSender(ObjectType.MESSAGE, Views.IdName.class);
+        this.wsSender = wsSender.getSender(ObjectType.MESSAGE, Views.FullMessage.class);
     }
 
     private void fillMeta(Message message) throws IOException {
@@ -95,7 +94,7 @@ public class MessageService {
     }
 
     public Message update(Message messageFormDb, Message message) throws IOException {
-        BeanUtils.copyProperties(message, messageFormDb, "id");
+        messageFormDb.setText(message.getText());
         fillMeta(message);
         Message updatedMessage = messageRepo.save(messageFormDb);
         wsSender.accept(EventsType.UPDATE, updatedMessage);
