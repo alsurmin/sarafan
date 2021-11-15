@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import YouTube from './YouTube.vue'
+import YouTube from './Youtube.vue'
 export default {
   name: 'Media',
   components: { YouTube },
