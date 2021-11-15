@@ -28,7 +28,7 @@ repositories {
 }
 
 node {
-	npmVersion = '2.1.5'
+	npmVersion = 'latest'
 	yarnVersion = '0.16.1'
 	distBaseUrl = 'https://nodejs.org/dist'
 	download = true
